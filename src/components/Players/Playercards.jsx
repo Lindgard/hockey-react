@@ -3,22 +3,28 @@ import { useState, useEffect } from 'react';
 function Playercards() {
   
   // useState som inneholder alle lag via useEffect
-    const [players, setPlayers] = useState([]);
-  
-  useEffect(() => {
-    for (let i = 1; i <= 55; i++){
-    fetch(`https://statsapi.web.nhl.com/api/v1/teams/`)
-      .then(response => response.json())
-      .then(response => setPlayers(response.roster))
-      .catch(error => setPlayers( error ));
-}}, []);
+  const [teams, setTeams] = useState([]);
 
-  console.log(players)
+  let teamsID = [1,2,3,4];
+
+
+  useEffect(() => {
+    for (let i = 0; i < teamsID.length; i++){
+      console.log(teamsID[i])
+    fetch(`https://statsapi.web.nhl.com/api/v1/teams/${teamsID[i]}/roster`)
+      .then(response => response.json())
+      .then(response => {setTeams(response.roster)
+      })
+      .catch(error => setTeams( error ));
+    }}, []);
+    console.log(teams)
+    
 
   return (
     <div>
-   {players.map((player : any) => (<p key={player.person.id}>{player.person.fullName}</p>))}
-    </div>
+{/*     {teams.map((player) => (<p key={player.person.id}>{player.person.fullName}</p>))}
+ */}     </div>
+    
   )
 };
 
